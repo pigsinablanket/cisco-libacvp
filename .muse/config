@@ -1,3 +1,4 @@
 setup = ".muse/setup.sh"
 build = "make"
 verifiers = [ "infer" ]
+customTools =  [ "https://docs.muse.dev/scripts/line-length.sh 120" ]

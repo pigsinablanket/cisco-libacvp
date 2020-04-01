@@ -3,12 +3,12 @@
         |  |     |  | |  |_)  |    /  ^  \   |  ,----' \   \/   /  |  |_)  |
         |  |     |  | |   _  <    /  /_\  \  |  |       \      /   |   ___/
         |  `----.|  | |  |_)  |  /  _____  \ |  `----.   \    /    |  |
-        |_______||__| |______/  /__/     \__\ \______|    \__/     | _|   
+        |_______||__| |______/  /__/     \__\ \______|    \__/     | _|
 
         A library that implements the client-side of the ACVP protocol.
         The ACVP specification is a work-in-progress and can be found at
         https://github.com/usnistgov/ACVP
-
+THIS LINE IS TOO LONG THIS LINE IS TOO LONG THIS LINE IS TOO LONG THIS LINE IS TOO LONG THIS LINE IS TOO LONG THIS LINE IS TOO LONG THIS LINE IS TOO LONG THIS LINE IS TOO LONG
 ### License
 Libacvp is licensed under the Apache License 2.0, which means that
 you are free to get and use it for commercial and non-commercial
@@ -22,7 +22,7 @@ ACVP spec version 1.0, see https://github.com/usnistgov/ACVP
 ## Overview
 
 Libacvp is a client-side ACVP library implementation, and also includes
-an example application which utilizes the library. 
+an example application which utilizes the library.
 
 libacvp will login and then register with the ACVP server (advertising capabilities)
 The server will respond with a list of vector set identifiers that need to be processed.
@@ -35,7 +35,7 @@ provides the glue between the crypto module DUT and the library itself.
 Depending upon the DUT, the crypto backend API, and other factors, the user
 may need to enhance the reference application, or create a new one from scratch.
 
-The application within `app/` is only provided here for unit testing and demonstrating how to use libacvp. 
+The application within `app/` is only provided here for unit testing and demonstrating how to use libacvp.
 The application layer (app_main.c) is required to interface with the crypto module that will
 be tested. In this example it uses OpenSSL, which introduces libcrypto.so as
 the DUT.
@@ -150,7 +150,7 @@ All dependent libraries must have been built with the same cross compile.
 
 *Note:* If the target in Step 2 does not have the standard libraries used by
 libacvp you may ./configure a special app used only for Step 2. This
-can be done by using --enable-offline and --enable-static when running 
+can be done by using --enable-offline and --enable-static when running
 ./configure and do not use --with-libcurl-dir or --with-libmurl-dir which
 will  minimize the library dependencies to libcrypto.so only(for the case
 of FOM testing).
@@ -184,4 +184,3 @@ throughout the library. That can be found in the `uncrustify/` directory.
 
 ## Credits
 This package was initially written by John Foley of Cisco Systems.
-
