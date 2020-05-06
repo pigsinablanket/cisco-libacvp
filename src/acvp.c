@@ -296,6 +296,8 @@ static void acvp_cap_free_kas_ecc_mode(ACVP_CAPS_LIST *cap_list) {
     ACVP_KAS_ECC_CAP_MODE *mode;
     int i;
 
+    int unused_var;
+
     if (kas_ecc_cap) {
         ACVP_PREREQ_LIST *current_pre_req_vals;
         ACVP_PREREQ_LIST *next_pre_req_vals;
@@ -921,8 +923,8 @@ ACVP_RESULT acvp_run_vectors_from_file(ACVP_CTX *ctx, const char *req_filename, 
         }
         ACVP_LOG_STATUS("Write vector set response vsId: %d", ctx->vs_id);
 
-        /* 
-         * Convert the JSON from a fully qualified to a value that can be 
+        /*
+         * Convert the JSON from a fully qualified to a value that can be
          * added to the file. Kind of klumsy, but it works.
          */
         kat_array = json_value_get_array(ctx->kat_resp);
@@ -941,7 +943,7 @@ ACVP_RESULT acvp_run_vectors_from_file(ACVP_CTX *ctx, const char *req_filename, 
             rsp_val = json_array_get_value(reg_array, 0);
             /* start the file with the '[' and identifiers array */
             acvp_json_serialize_to_file_pretty_w(rsp_val, rsp_filename);
-        } 
+        }
         /* append vector sets */
         rv = acvp_json_serialize_to_file_pretty_a(file_val, rsp_filename);
         if (rv != ACVP_SUCCESS) {
@@ -955,7 +957,7 @@ ACVP_RESULT acvp_run_vectors_from_file(ACVP_CTX *ctx, const char *req_filename, 
         obj = json_array_get_object(reg_array, n);
         vs_entry = vs_entry->next;
     }
-    /* append the final ']' to make the JSON work */ 
+    /* append the final ']' to make the JSON work */
     rv = acvp_json_serialize_to_file_pretty_a(NULL, rsp_filename);
 end:
     json_value_free(val);
@@ -1338,7 +1340,7 @@ ACVP_RESULT acvp_mark_as_sample(ACVP_CTX *ctx) {
 ACVP_RESULT acvp_mark_as_request_only(ACVP_CTX *ctx, char *filename) {
     if (!ctx) {
         return ACVP_NO_CTX;
-    } 
+    }
     if (!filename) {
         return ACVP_MISSING_ARG;
     }
@@ -1361,7 +1363,7 @@ ACVP_RESULT acvp_mark_as_get_only(ACVP_CTX *ctx, char *string) {
 
     if (!ctx) {
         return ACVP_NO_CTX;
-    } 
+    }
     if (!string) {
         return ACVP_MISSING_ARG;
     }
@@ -1385,7 +1387,7 @@ ACVP_RESULT acvp_mark_as_post_only(ACVP_CTX *ctx, char *filename) {
 
     if (!ctx) {
         return ACVP_NO_CTX;
-    } 
+    }
     if (!filename) {
         return ACVP_MISSING_ARG;
     }
@@ -1682,7 +1684,7 @@ ACVP_RESULT acvp_notify_large(ACVP_CTX *ctx,
     val = json_value_init_object();
     obj = json_value_get_object(val);
 
-    /* 
+    /*
      * Cut off the https://name:port/ prefix and /results suffix
      */
     strstr_s((char *)url, ACVP_ATTR_URL_MAX, "/acvp/v1", 8, &substr);
@@ -1696,7 +1698,7 @@ ACVP_RESULT acvp_notify_large(ACVP_CTX *ctx,
 
     json_object_set_string(obj, "vectorSetUrl", snipped_url);
     json_object_set_number(obj, "submissionSize", data_len);
-    
+
     json_array_append_value(arr, val);
 
     large_notify = json_serialize_to_string(arr_val, &notify_len);
@@ -1952,11 +1954,11 @@ ACVP_RESULT acvp_refresh(ACVP_CTX *ctx) {
  * list of vs_id's that need to be processed during the test
  * session.  This routine will execute the test flow for a single
  * vs_id.  The flow is:
- *	a) Download the KAT vector set from the server using the vs_id
- *	b) Parse the KAT vectors
- *	c) Process each test case in the KAT vector set
- *	d) Generate the response data
- *	e) Send the response data back to the ACVP server
+ *      a) Download the KAT vector set from the server using the vs_id
+ *      b) Parse the KAT vectors
+ *      c) Process each test case in the KAT vector set
+ *      d) Generate the response data
+ *      e) Send the response data back to the ACVP server
  */
 static ACVP_RESULT acvp_process_vsid(ACVP_CTX *ctx, char *vsid_url, int count) {
     ACVP_RESULT rv = ACVP_SUCCESS;
@@ -2029,7 +2031,7 @@ static ACVP_RESULT acvp_process_vsid(ACVP_CTX *ctx, char *vsid_url, int count) {
                         json_value_free(ts_val);
                         goto end;
                     }
-                } 
+                }
                 /* append vector set */
                 rv = acvp_json_serialize_to_file_pretty_a(alg_val, ctx->vector_req_file);
                 json_value_free(ts_val);
@@ -2116,10 +2118,10 @@ static ACVP_RESULT acvp_dispatch_vector_set(ACVP_CTX *ctx, JSON_Object *obj) {
  * here to know which vectors need to be processed.
  *
  * The processing logic is:
- *	a) JSON parse the data
- *	b) Identify the ACVP operation to be performed (e.g. AES encrypt)
- *	c) Dispatch the vectors to the handler for the
- *	   specified ACVP operation.
+ *      a) JSON parse the data
+ *      b) Identify the ACVP operation to be performed (e.g. AES encrypt)
+ *      c) Dispatch the vectors to the handler for the
+ *         specified ACVP operation.
  */
 static ACVP_RESULT acvp_process_vector_set(ACVP_CTX *ctx, JSON_Object *obj) {
     ACVP_RESULT rv;
@@ -2384,7 +2386,7 @@ ACVP_RESULT acvp_run(ACVP_CTX *ctx, int fips_validation) {
     }
 
 
-    if (ctx->get) { 
+    if (ctx->get) {
         rv = acvp_transport_get(ctx, ctx->get_string, NULL);
         if (ctx->debug == ACVP_LOG_LVL_VERBOSE) {
             printf("\nGET Response: %s\n\n", ctx->curl_buf);
@@ -2392,7 +2394,7 @@ ACVP_RESULT acvp_run(ACVP_CTX *ctx, int fips_validation) {
         goto end;
     }
 
-    if (ctx->post) { 
+    if (ctx->post) {
         rv = acvp_post_data(ctx, ctx->post_filename);
         goto end;
     }
